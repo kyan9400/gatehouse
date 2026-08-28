@@ -4,7 +4,14 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_prefix="GATEHOUSE_", env_file=".env", extra="ignore")
+    # Hosting providers may materialize blank entries from .env.example. Treat
+    # those as unset so optional deployment settings fall back to safe defaults.
+    model_config = SettingsConfigDict(
+        env_prefix="GATEHOUSE_",
+        env_file=".env",
+        env_ignore_empty=True,
+        extra="ignore",
+    )
 
     app_name: str = "Gatehouse"
     environment: str = "local"
