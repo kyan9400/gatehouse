@@ -1,0 +1,57 @@
+openapi: 3.1.0
+info:
+  title: Gatehouse API
+  version: 0.1.0
+  description: Multi-tenant access request and approval workflows.
+servers:
+  - url: http://localhost:8000
+paths:
+  /healthz:
+    get:
+      summary: Liveness probe
+      responses:
+        '200': { description: Healthy }
+  /readyz:
+    get:
+      summary: Readiness probe
+      responses:
+        '200': { description: Ready }
+  /api/v1/overview:
+    get:
+      summary: Workspace access overview
+      parameters:
+        - { name: X-Workspace-ID, in: header, required: true, schema: { type: string } }
+      responses:
+        '200': { description: Overview returned }
+  /api/v1/access-requests:
+    get:
+      summary: List workspace requests
+      responses:
+        '200': { description: Requests returned }
+    post:
+      summary: Create an access request
+      parameters:
+        - { name: Idempotency-Key, in: header, required: false, schema: { type: string } }
+      responses:
+        '201': { description: Request created }
+  /api/v1/access-requests/{request_id}/approve:
+    post:
+      summary: Approve a pending request
+      parameters:
+        - { name: request_id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200': { description: Request approved }
+        '409': { description: Concurrent or duplicate decision }
+  /api/v1/access-requests/{request_id}/deny:
+    post:
+      summary: Deny a pending request
+      parameters:
+        - { name: request_id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200': { description: Request denied }
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key

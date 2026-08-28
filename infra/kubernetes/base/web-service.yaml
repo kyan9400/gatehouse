@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gatehouse-web
+  namespace: gatehouse
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: gatehouse-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: gatehouse
+  description: Policy-first, auditable access request and approval control plane.
+  annotations:
+    github.com/project-slug: kyan9400/gatehouse
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+spec:
+  type: service
+  lifecycle: experimental
+  owner: platform-team
+  system: access-operations
+  providesApis:
+    - gatehouse-api

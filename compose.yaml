@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:16.6-alpine
+    environment:
+      POSTGRES_DB: gatehouse
+      POSTGRES_USER: gatehouse
+      POSTGRES_PASSWORD: gatehouse-local-only
+    volumes:
+      - gatehouse-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gatehouse -d gatehouse"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: ./services/api
+    environment:
+      GATEHOUSE_ENVIRONMENT: local
+      GATEHOUSE_DATABASE_URL: postgresql+asyncpg://gatehouse:gatehouse-local-only@db:5432/gatehouse
+      GATEHOUSE_CORS_ORIGINS: http://localhost:5173
+      GATEHOUSE_DEMO_SEED: "true"
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./apps/web
+      args:
+        VITE_API_URL: http://localhost:8000
+    ports:
+      - "5173:8080"
+    depends_on:
+      - api
+
+volumes:
+  gatehouse-db:

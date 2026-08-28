@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gatehouse-config
+  namespace: gatehouse
+data:
+  GATEHOUSE_ENVIRONMENT: production
+  GATEHOUSE_CORS_ORIGINS: https://gatehouse.example.com
+  GATEHOUSE_DEMO_SEED: "false"

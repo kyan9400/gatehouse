@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gatehouse
+  namespace: gatehouse
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts: [gatehouse.example.com]
+      secretName: gatehouse-tls
+  rules:
+    - host: gatehouse.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gatehouse-web
+                port:
+                  number: 80
