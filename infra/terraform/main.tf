@@ -89,9 +89,9 @@ resource "aws_ecs_task_definition" "main" {
 
   container_definitions = jsonencode([
     {
-      name      = "api"
-      image     = var.api_image
-      essential = true
+      name         = "api"
+      image        = var.api_image
+      essential    = true
       portMappings = [{ containerPort = 8000, protocol = "tcp" }]
       environment = [
         { name = "GATEHOUSE_ENVIRONMENT", value = var.environment },
@@ -108,10 +108,10 @@ resource "aws_ecs_task_definition" "main" {
       }
     },
     {
-      name      = "web"
-      image     = var.web_image
-      essential = true
-      portMappings = [{ containerPort = 8080, protocol = "tcp" }]
+      name                   = "web"
+      image                  = var.web_image
+      essential              = true
+      portMappings           = [{ containerPort = 8080, protocol = "tcp" }]
       readonlyRootFilesystem = true
       logConfiguration = {
         logDriver = "awslogs"
