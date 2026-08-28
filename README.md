@@ -16,7 +16,7 @@ Standing production access creates ambiguity during an incident: who had access,
 
 The live dashboard is a deterministic demo that runs without credentials:
 
-**[Open the Gatehouse dashboard →](https://gatehouse.vercel.app)**
+**[Open the Gatehouse dashboard →](https://gatehouse-nine.vercel.app)**
 
 The API is ready to run locally or in a cluster with Docker Compose, Kubernetes, or the Terraform AWS path.
 
