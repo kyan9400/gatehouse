@@ -18,7 +18,11 @@ The live dashboard is a deterministic demo that runs without credentials:
 
 **[Open the Gatehouse dashboard →](https://gatehouse-nine.vercel.app)**
 
+**[Explore the live FastAPI / OpenAPI service →](https://gatehouse-api.vercel.app/docs)**
+
 The API is ready to run locally or in a cluster with Docker Compose, Kubernetes, or the Terraform AWS path.
+
+The hosted API is a disposable demo deployment: it uses Vercel's writable `/tmp` filesystem for its SQLite smoke data. Durable installations should use the documented PostgreSQL configuration.
 
 ## What it demonstrates
 
